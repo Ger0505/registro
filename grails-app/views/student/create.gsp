@@ -29,6 +29,12 @@
             <g:form resource="${this.student}" method="POST">
                 <fieldset class="form">
                 <div class="fieldcontain required">
+                    <label for="nombre">Nombre Completo
+                    <span class="required-indicator">*</span>   
+                    </label>
+                    <g:field type="text" name="nombre" required="" value="${student?.nombre}" />
+                </div>
+                <div class="fieldcontain required">
                     <label for="correo">Correo
                     <span class="required-indicator">*</span>   
                     </label>
@@ -55,8 +61,7 @@
                     <span class="required-indicator">*</span>   
                     </label>
                     <g:select id="nivel" name='nivel' value="${student?.nivel}"
-                        noSelection="${['null':'Selecciona...']}"
-                        from='${['Bachillerato','Licenciatura','Maestría','Postgrado']}'
+                        from='${['Licenciatura','Maestría','Doctorado']}'
                         optionValue='value'
                         onchange="changeCourse()"></g:select>
                 
@@ -66,7 +71,6 @@
                     <span class="required-indicator">*</span>   
                     </label>
                     <g:select id="curso" name='curso' value="${student?.curso}"
-                        noSelection="${['null':'Selecciona...']}"
                         from='${['Enfermeria','Software','Arquitectura']}'
                         optionValue='value'></g:select>
                 </div>
@@ -77,11 +81,23 @@
             </g:form>
         </div>
         <g:javascript>
-        function changeCourse(){
-            let valor = $('#nivel').val()
+         const licArray = ['Enfermería', 'Software', 'Arquitectura']
+        const masArray = ['Fiscal', 'Educación']
+        const docArray = ['Comunicación', 'Gastronomía']
 
-            console.log(valor);
-            <g:set var="entityNivel" value="${valor}" />
+        const changeCourse = () =>{
+            let valueN = $('#nivel').val()
+            let selects = $("#curso").empty()
+            let arraySelect;
+            if(valueN === 'Licenciatura') arraySelect = licArray
+            else if(valueN === 'Maestría') arraySelect = masArray
+            else if(valueN === 'Doctorado') arraySelect = docArray
+            $.each(arraySelect, (key,value) => {   
+                $(selects)
+                    .append($("<option></option>")
+                    .attr("value", value)
+                    .text(value)); 
+            });
         }
         </g:javascript>
     </body>

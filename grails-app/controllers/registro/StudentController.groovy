@@ -28,6 +28,30 @@ class StudentController {
             return
         }
 
+        if(studentService.findByMatricula(student.matricula) != null){
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'El alumno con la matricula {0}, ya está registrado', args: [message(code: 'student.label', default: student.matricula), student.matricula])
+                    redirect action:"index", method:"GET"
+                }
+                '*'{ render status: NO_CONTENT }
+            }
+            return
+        }
+
+        if(student.semestre != 1){
+            request.withFormat {
+                form multipartForm {
+                    flash.message = 'Solo puede ser registrados alumnos de 1er. semestre'
+                    flash.args = []
+                    flash.default = 'Solo 1er. Semestre'
+                    redirect action:"index", method:"GET"
+                }
+                '*'{ render status: NO_CONTENT }
+            }
+            return
+        }
+
         try {
             studentService.save(student)
         } catch (ValidationException e) {

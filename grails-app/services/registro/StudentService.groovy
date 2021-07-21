@@ -1,18 +1,49 @@
 package registro
 
-import grails.gorm.services.Service
+import grails.transaction.Transactional
 
-@Service(Student)
-interface StudentService {
+@Transactional
+class StudentService {
 
-    Student get(Serializable id)
+    def get(id){
+        Student.get(id)
+    }
 
-    List<Student> list(Map args)
+    def list(Map args){
+        return Student.list(args)
+    }
 
-    Long count()
+    def count(){
+        return Student.count()
+    }
 
-    void delete(Serializable id)
+    def save(Student student){
+        student.save()
+    }
 
-    Student save(Student student)
+    def delete(Serializable id){
+        Student.get(id).delete()
+    }
 
+    def findByMatricula (String matricula){
+        return Student.findByMatricula(matricula)
+    }
 }
+// package registro
+
+// import grails.gorm.services.Service
+
+// @Service(Student)
+// class StudentService {
+
+//     Student get(Serializable id)
+
+//     List<Student> list(Map args)
+
+//     Long count()
+
+//     void delete(Serializable id)
+
+//     Student save(Student student)
+
+// }
