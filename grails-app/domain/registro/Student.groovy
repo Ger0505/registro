@@ -15,5 +15,6 @@ class Student {
         semestre range: 1..10, blank: false
         nivel blank: false
         curso blank: false
+        // a1RPE0$jUEKW
     }
 }

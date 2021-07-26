@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.*
 class StudentController {
 
     StudentService studentService
+    def mailService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -54,6 +55,13 @@ class StudentController {
 
         try {
             studentService.save(student)
+            // mailService.sendMail {
+            //     to student.correo
+            //     from "gerzonex360@gmail.com"
+            //     subject "Prueba pruebil"
+            //     html "El alumno con la matricula " + student.matricula + ", fue registrado exitosamente"
+            // }
+            // 1*80DqjBcf#z
         } catch (ValidationException e) {
             respond student.errors, view:'create'
             return
